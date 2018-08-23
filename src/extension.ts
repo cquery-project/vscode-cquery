@@ -69,11 +69,24 @@ enum StorageClass {
   Auto,
   Register
 }
+namespace SymbolRole {
+  export const Declaration : number = 1 << 0;
+	export const Definition : number = 1 << 1;
+	export const Reference = 1 << 2;
+	export const Read = 1 << 3;
+	export const Write = 1 << 4;
+	export const Call = 1 << 5;
+	export const Dynamic = 1 << 6;
+	export const Address = 1 << 7;
+	export const Implicit = 1 << 8;
+}
+
 class SemanticSymbol {
   constructor(
       readonly stableId: number, readonly parentKind: SymbolKind,
       readonly kind: SymbolKind, readonly isTypeMember: boolean,
-      readonly storage: StorageClass, readonly ranges: Array<Range>) {}
+      readonly storage: StorageClass, readonly role: number,
+      readonly ranges: Array<Range>) {}
 }
 
 function getClientConfig(context: ExtensionContext) {
@@ -83,7 +96,9 @@ function getClientConfig(context: ExtensionContext) {
     let options = [
       'cquery.highlighting.enabled.types',
       'cquery.highlighting.enabled.freeStandingFunctions',
+      'cquery.highlighting.enabled.freeStandingFunctionDeclarations',
       'cquery.highlighting.enabled.memberFunctions',
+      'cquery.highlighting.enabled.memberFunctionDeclarations',
       'cquery.highlighting.enabled.freeStandingVariables',
       'cquery.highlighting.enabled.memberVariables',
       'cquery.highlighting.enabled.namespaces',
@@ -92,6 +107,7 @@ function getClientConfig(context: ExtensionContext) {
       'cquery.highlighting.enabled.typeAliases',
       'cquery.highlighting.enabled.enumConstants',
       'cquery.highlighting.enabled.staticMemberFunctions',
+      'cquery.highlighting.enabled.staticMemberFunctionDeclarations',
       'cquery.highlighting.enabled.parameters',
       'cquery.highlighting.enabled.templateParameters',
       'cquery.highlighting.enabled.staticMemberVariables',
@@ -787,11 +803,13 @@ export function activate(context: ExtensionContext) {
     let semanticDecorations = new Map<string, TextEditorDecorationType[]>();
     let semanticEnabled = new Map<string, boolean>();
     for (let type of
-             ['types', 'freeStandingFunctions', 'memberFunctions',
+             ['types', 'freeStandingFunctions', 'freeStandingFunctionDeclarations',
+              'memberFunctions', 'memberFunctionDeclarations',
               'freeStandingVariables', 'memberVariables', 'namespaces',
               'macros', 'enums', 'typeAliases', 'enumConstants',
-              'staticMemberFunctions', 'parameters', 'templateParameters',
-              'staticMemberVariables', 'globalVariables']) {
+              'staticMemberFunctions', 'staticMemberFunctionDeclarations',
+              'parameters', 'templateParameters', 'staticMemberVariables', 
+              'globalVariables']) {
       semanticDecorations.set(type, makeDecorations(type));
       semanticEnabled.set(type, false);
     }
@@ -815,6 +833,10 @@ export function activate(context: ExtensionContext) {
         return decorations[symbol.stableId % decorations.length];
       };
 
+      function isDeclaration(role: number) {
+        return (role & SymbolRole.Declaration) != 0 || (role & SymbolRole.Definition) != 0;
+      };
+
       if (symbol.kind == SymbolKind.Class || symbol.kind == SymbolKind.Struct) {
         return get('types');
       } else if (symbol.kind == SymbolKind.Enum) {
@@ -824,12 +846,21 @@ export function activate(context: ExtensionContext) {
       } else if (symbol.kind == SymbolKind.TypeParameter) {
         return get('templateParameters');
       } else if (symbol.kind == SymbolKind.Function) {
+        if (isDeclaration(symbol.role)) {
+          return get('freeStandingFunctionDeclarations');
+        }
         return get('freeStandingFunctions');
       } else if (
           symbol.kind == SymbolKind.Method ||
           symbol.kind == SymbolKind.Constructor) {
+        if (isDeclaration(symbol.role)) {
+          return get('memberFunctionDeclarations');
+        }
         return get('memberFunctions')
       } else if (symbol.kind == SymbolKind.StaticMethod) {
+        if (isDeclaration(symbol.role)) {
+          return get('staticMemberFunctionDeclarations');
+        }
         return get('staticMemberFunctions')
       } else if (symbol.kind == SymbolKind.Variable) {
         if (symbol.parentKind == SymbolKind.Function ||

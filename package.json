@@ -185,12 +185,22 @@
         "cquery.highlighting.enabled.freeStandingFunctions": {
           "type": "boolean",
           "default": false,
-          "description": "If semantic highlighting for member functions is enabled/disabled."
+          "description": "If semantic highlighting for non-member functions is enabled/disabled."
+        },
+        "cquery.highlighting.enabled.freeStandingFunctionDeclarations": {
+          "type": "boolean",
+          "default": false,
+          "description": "If semantic highlighting for non-member function declarations is enabled/disabled."
         },
         "cquery.highlighting.enabled.memberFunctions": {
           "type": "boolean",
           "default": false,
           "description": "If semantic highlighting for member functions is enabled/disabled."
+        },
+        "cquery.highlighting.enabled.memberFunctionDeclarations": {
+          "type": "boolean",
+          "default": false,
+          "description": "If semantic highlighting for member function declarations is enabled/disabled."
         },
         "cquery.highlighting.enabled.freeStandingVariables": {
           "type": "boolean",
@@ -231,6 +241,11 @@
           "type": "boolean",
           "default": false,
           "description": "If semantic highlighting for static member functions is enabled/disabled."
+        },
+        "cquery.highlighting.enabled.staticMemberFunctionDeclarations": {
+          "type": "boolean",
+          "default": false,
+          "description": "If semantic highlighting for static member function declarations is enabled/disabled."
         },
         "cquery.highlighting.enabled.parameters": {
           "type": "boolean",
@@ -284,7 +299,39 @@
           ],
           "description": "Colors to use for semantic highlighting. A good generator is http://tools.medialab.sciences-po.fr/iwanthue/. If multiple colors are specified, semantic highlighting will cycle through them for successive symbols."
         },
+        "cquery.highlighting.colors.freeStandingFunctionDeclarations": {
+          "type": "array",
+          "default": [
+            "#e5b124",
+            "#927754",
+            "#eb992c",
+            "#e2bf8f",
+            "#d67c17",
+            "#88651e",
+            "#e4b953",
+            "#a36526",
+            "#b28927",
+            "#d69855"
+          ],
+          "description": "Colors to use for semantic highlighting. A good generator is http://tools.medialab.sciences-po.fr/iwanthue/. If multiple colors are specified, semantic highlighting will cycle through them for successive symbols."
+        },
         "cquery.highlighting.colors.memberFunctions": {
+          "type": "array",
+          "default": [
+            "#e5b124",
+            "#927754",
+            "#eb992c",
+            "#e2bf8f",
+            "#d67c17",
+            "#88651e",
+            "#e4b953",
+            "#a36526",
+            "#b28927",
+            "#d69855"
+          ],
+          "description": "Colors to use for semantic highlighting. A good generator is http://tools.medialab.sciences-po.fr/iwanthue/. If multiple colors are specified, semantic highlighting will cycle through them for successive symbols."
+        },
+        "cquery.highlighting.colors.memberFunctionDeclarations": {
           "type": "array",
           "default": [
             "#e5b124",
@@ -412,6 +459,22 @@
           ],
           "description": "Colors to use for semantic highlighting. A good generator is http://tools.medialab.sciences-po.fr/iwanthue/. If multiple colors are specified, semantic highlighting will cycle through them for successive symbols."
         },
+        "cquery.highlighting.colors.staticMemberFunctionDeclarations": {
+          "type": "array",
+          "default": [
+            "#e5b124",
+            "#927754",
+            "#eb992c",
+            "#e2bf8f",
+            "#d67c17",
+            "#88651e",
+            "#e4b953",
+            "#a36526",
+            "#b28927",
+            "#d69855"
+          ],
+          "description": "Colors to use for semantic highlighting. A good generator is http://tools.medialab.sciences-po.fr/iwanthue/. If multiple colors are specified, semantic highlighting will cycle through them for successive symbols."
+        },
         "cquery.highlighting.colors.enumConstants": {
           "type": "array",
           "default": [
@@ -500,7 +563,15 @@
           "type": "boolean",
           "default": false
         },
+        "cquery.highlighting.underline.freeStandingFunctionDeclarations": {
+          "type": "boolean",
+          "default": false
+        },
         "cquery.highlighting.underline.memberFunctions": {
+          "type": "boolean",
+          "default": false
+        },
+        "cquery.highlighting.underline.memberFunctionDeclarations": {
           "type": "boolean",
           "default": false
         },
@@ -536,6 +607,10 @@
           "type": "boolean",
           "default": true
         },
+        "cquery.highlighting.underline.staticMemberFunctionDeclarations": {
+          "type": "boolean",
+          "default": true
+        },
         "cquery.highlighting.underline.parameters": {
           "type": "boolean",
           "default": false
@@ -560,7 +635,15 @@
           "type": "boolean",
           "default": false
         },
+        "cquery.highlighting.italic.freeStandingFunctionDeclarations": {
+          "type": "boolean",
+          "default": false
+        },
         "cquery.highlighting.italic.memberFunctions": {
+          "type": "boolean",
+          "default": true
+        },
+        "cquery.highlighting.italic.memberFunctionDeclarations": {
           "type": "boolean",
           "default": true
         },
@@ -596,6 +679,10 @@
           "type": "boolean",
           "default": false
         },
+        "cquery.highlighting.italic.staticMemberFunctionDeclarations": {
+          "type": "boolean",
+          "default": false
+        },
         "cquery.highlighting.italic.parameters": {
           "type": "boolean",
           "default": true
@@ -620,7 +707,15 @@
           "type": "boolean",
           "default": false
         },
+        "cquery.highlighting.bold.freeStandingFunctionDeclarations": {
+          "type": "boolean",
+          "default": false
+        },
         "cquery.highlighting.bold.memberFunctions": {
+          "type": "boolean",
+          "default": false
+        },
+        "cquery.highlighting.bold.memberFunctionDeclarations": {
           "type": "boolean",
           "default": false
         },
@@ -653,6 +748,10 @@
           "default": true
         },
         "cquery.highlighting.bold.staticMemberFunctions": {
+          "type": "boolean",
+          "default": false
+        },
+        "cquery.highlighting.bold.staticMemberFunctionDeclarations": {
           "type": "boolean",
           "default": false
         },
