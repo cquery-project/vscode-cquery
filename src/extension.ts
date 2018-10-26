@@ -134,6 +134,7 @@ function getClientConfig(context: ExtensionContext) {
     ['extraClangArguments', 'index.extraClangArguments'],
     ['resourceDirectory', 'misc.resourceDirectory'],
     ['workspaceSymbol.maxNum', 'misc.maxWorkspaceSearchResults'],
+    ['workspaceSymbol.workspaceSearchResults', 'misc.workspaceSearchResults'],
     ['index.threads', 'misc.indexerCount'],
     ['index.enabled', 'misc.enableIndexing'],
     ['enableCacheWrite', 'misc.enableCacheWrite'],
@@ -179,6 +180,11 @@ function getClientConfig(context: ExtensionContext) {
       subconfig[subprops[subprops.length - 1]] = resolveVariables(value);
     }
   }
+
+  // Gather workspaceFolder paths in current workspace.
+  clientConfig["workspaceFolders"] = workspace.workspaceFolders.map(workspaceFolder => {
+    return workspaceFolder.uri.path;
+  });
 
   // Set up a cache directory if there is not one.
   if (!clientConfig.cacheDirectory) {
