@@ -715,14 +715,10 @@
           "default": null,
           "description": "The maximum number of global search (ie, Ctrl+P + #foo) search results to report. For small search strings on large projects there can be a massive number of results (ie, over 1,000,000) so this limit is important to avoid extremely long delays. null means use the default value provided by the cquery language server."
         },
-        "cquery.misc.workspaceSearchResults": {
-          "type": "string",
-          "enum": [
-            "All",
-            "Just My Code"
-          ],
-          "default": "Just My Code",
-          "description": "The symbols to include in the query results when 'Go to Symbol in Workspace' is invoked"
+        "cquery.misc.workspaceSymbolJustMyCode": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, non workspace symbols are filtered from workspace symbols."
         },
         "cquery.misc.indexerCount": {
           "type": "number",

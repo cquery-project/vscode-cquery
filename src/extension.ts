@@ -134,7 +134,7 @@ function getClientConfig(context: ExtensionContext) {
     ['extraClangArguments', 'index.extraClangArguments'],
     ['resourceDirectory', 'misc.resourceDirectory'],
     ['workspaceSymbol.maxNum', 'misc.maxWorkspaceSearchResults'],
-    ['workspaceSymbol.workspaceSearchResults', 'misc.workspaceSearchResults'],
+    ['workspaceSymbol.justMyCode', 'misc.workspaceSymbolJustMyCode'],
     ['index.threads', 'misc.indexerCount'],
     ['index.enabled', 'misc.enableIndexing'],
     ['enableCacheWrite', 'misc.enableCacheWrite'],
