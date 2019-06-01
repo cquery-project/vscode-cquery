@@ -362,12 +362,19 @@ export function activate(context: ExtensionContext) {
       outputChannelName: 'cquery',
       revealOutputChannelOn: RevealOutputChannelOn.Never,
       initializationOptions: clientConfig,
-      middleware: {provideCodeLenses: provideCodeLens},
+      middleware: {},
       initializationFailedHandler: (e) => {
         console.log(e);
         return false;
       },
       errorHandler: new CqueryErrorHandler(workspace.getConfiguration('cquery'))
+    }
+
+    // Enable/disable CodeLens middleware based on settings
+    let config = workspace.getConfiguration('cquery');
+    let enableCodeLens = config.get('codeLens.enable', true);
+    if(enableCodeLens){
+      clientOptions.middleware['provideCodeLenses'] = provideCodeLens;
     }
 
     // Create the language client and start the client.
